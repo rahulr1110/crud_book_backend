@@ -27,6 +27,27 @@ app.get("/book/:id", async (req, res) => {
     res.status(500).json(error);
   }
 });
+//update the book by id
+app.put("/book/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updateBook = await Book.findByIdAndUpdate(id, req.body);
+    res.status(200).json(updateBook);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+//delete the book by id
+app.delete("/book/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const book = await Book.findByIdAndDelete(id);
+    res.status(200).json(book);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 //create book
 app.post("/book", async (req, res) => {
