@@ -4,31 +4,40 @@ import { Book } from "./models.js";
 
 const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
 connectDB();
 
 //getting books
-app.get('/books',async (req,res)=>{
- try {
-   const book =await Book.find()
-   res.status(200).json(book)
- } catch (error) {
-   res.status(500).json(error)
- }
-})
-
+app.get("/books", async (req, res) => {
+  try {
+    const book = await Book.find();
+    res.status(200).json(book);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+//getting book by id
+app.get("/book/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const book = await Book.findById(id);
+    res.status(200).json(book);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 //create book
-app.post('/book',async (req,res)=>{
+app.post("/book", async (req, res) => {
   try {
-    const book = req.body
-    const createBook =await Book.create(book)
-    res.status(200).json(createBook)
+    const book = req.body;
+    const createBook = await Book.create(book);
+    res.status(200).json(createBook);
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json(error);
   }
-})
+});
 
 app.listen(5000, () => {
   console.log("server running");
